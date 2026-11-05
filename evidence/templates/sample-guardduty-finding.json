@@ -1,0 +1,67 @@
+{
+  "_comment": "Sample GuardDuty finding — IAM privilege escalation. Replace all placeholder values with real finding data. Save as: YYYY-MM-DD_INC-XXXX_guardduty-finding.json",
+  "Findings": [
+    {
+      "AccountId": "123456789012",
+      "Arn": "arn:aws:guardduty:eu-west-1:123456789012:detector/abc123def456/finding/abc123def456abc123",
+      "CreatedAt": "2025-01-15T09:23:41Z",
+      "UpdatedAt": "2025-01-15T09:45:12Z",
+      "Description": "APIs commonly used to escalate privileges were invoked by IAM user jane.smith. This activity is unusual for this user and may indicate that the user's credentials are compromised.",
+      "Id": "abc123def456abc123def456abc123de",
+      "Region": "eu-west-1",
+      "Severity": 8.0,
+      "Title": "Privilege escalation APIs invoked by user jane.smith",
+      "Type": "PrivilegeEscalation:IAMUser/AdministrativePermissions",
+      "Service": {
+        "Action": {
+          "ActionType": "AWS_API_CALL",
+          "AwsApiCallAction": {
+            "Api": "AttachUserPolicy",
+            "CallerType": "Remote IP",
+            "RemoteIpDetails": {
+              "City": {
+                "CityName": "Amsterdam"
+              },
+              "Country": {
+                "CountryCode": "NL",
+                "CountryName": "Netherlands"
+              },
+              "IpAddressV4": "185.220.101.47",
+              "Organization": {
+                "Asn": "4444",
+                "AsnOrg": "Tor Project",
+                "Isp": "Tor Exit Node",
+                "Org": "Tor Project"
+              }
+            },
+            "ServiceName": "iam.amazonaws.com"
+          }
+        },
+        "Count": 3,
+        "Archived": false,
+        "DetectorId": "abc123def456",
+        "EventFirstSeen": "2025-01-15T09:18:00Z",
+        "EventLastSeen": "2025-01-15T09:22:00Z",
+        "Evidence": {
+          "ThreatIntelligenceDetails": [
+            {
+              "ThreatListName": "ProofPoint",
+              "ThreatNames": ["TorExitNode"]
+            }
+          ]
+        },
+        "ResourceRole": "TARGET",
+        "ServiceName": "guardduty"
+      },
+      "Resource": {
+        "ResourceType": "AccessKey",
+        "AccessKeyDetails": {
+          "AccessKeyId": "AKIAIOSFODNN7EXAMPLE",
+          "PrincipalId": "AIDAEXAMPLEID",
+          "UserName": "jane.smith",
+          "UserType": "IAMUser"
+        }
+      }
+    }
+  ]
+}

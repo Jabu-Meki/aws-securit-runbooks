@@ -1,0 +1,117 @@
+{
+  "_comment": "Sample AWS Config compliance output — used as SOC 2 / CIS Benchmark evidence. Save as: YYYY-MM-DD_config-compliance-<rule-name>.json",
+  "_how_to_generate": "aws configservice describe-compliance-by-config-rule --config-rule-names <RULE_NAME>",
+  "ComplianceByConfigRules": [
+    {
+      "ConfigRuleName": "mfa-enabled-for-iam-console-access",
+      "Compliance": {
+        "ComplianceType": "NON_COMPLIANT",
+        "ComplianceContributorCount": {
+          "CappedCount": 1,
+          "CapExceeded": false
+        }
+      }
+    },
+    {
+      "ConfigRuleName": "root-account-mfa-enabled",
+      "Compliance": {
+        "ComplianceType": "COMPLIANT",
+        "ComplianceContributorCount": {
+          "CappedCount": 0,
+          "CapExceeded": false
+        }
+      }
+    },
+    {
+      "ConfigRuleName": "restricted-ssh",
+      "Compliance": {
+        "ComplianceType": "COMPLIANT",
+        "ComplianceContributorCount": {
+          "CappedCount": 0,
+          "CapExceeded": false
+        }
+      }
+    },
+    {
+      "ConfigRuleName": "s3-bucket-public-read-prohibited",
+      "Compliance": {
+        "ComplianceType": "COMPLIANT",
+        "ComplianceContributorCount": {
+          "CappedCount": 0,
+          "CapExceeded": false
+        }
+      }
+    },
+    {
+      "ConfigRuleName": "cloud-trail-enabled",
+      "Compliance": {
+        "ComplianceType": "COMPLIANT",
+        "ComplianceContributorCount": {
+          "CappedCount": 0,
+          "CapExceeded": false
+        }
+      }
+    },
+    {
+      "ConfigRuleName": "cloud-trail-log-file-validation-enabled",
+      "Compliance": {
+        "ComplianceType": "COMPLIANT",
+        "ComplianceContributorCount": {
+          "CappedCount": 0,
+          "CapExceeded": false
+        }
+      }
+    },
+    {
+      "ConfigRuleName": "ec2-imdsv2-check",
+      "Compliance": {
+        "ComplianceType": "NON_COMPLIANT",
+        "ComplianceContributorCount": {
+          "CappedCount": 3,
+          "CapExceeded": false
+        }
+      }
+    },
+    {
+      "ConfigRuleName": "encrypted-volumes",
+      "Compliance": {
+        "ComplianceType": "COMPLIANT",
+        "ComplianceContributorCount": {
+          "CappedCount": 0,
+          "CapExceeded": false
+        }
+      }
+    }
+  ],
+  "_analysis": {
+    "generated_at": "2025-01-15T10:00:00Z",
+    "generated_by": "security-team",
+    "account_id": "123456789012",
+    "findings": [
+      {
+        "rule": "mfa-enabled-for-iam-console-access",
+        "status": "NON_COMPLIANT",
+        "affected_resources": 1,
+        "action": "REMEDIATE - see RB-006",
+        "ticket": "JIRA-1234",
+        "due_date": "2025-01-22"
+      },
+      {
+        "rule": "ec2-imdsv2-check",
+        "status": "NON_COMPLIANT",
+        "affected_resources": 3,
+        "action": "REMEDIATE - enforce IMDSv2 on legacy instances",
+        "ticket": "JIRA-1235",
+        "due_date": "2025-01-22"
+      }
+    ],
+    "framework_mapping": {
+      "mfa-enabled-for-iam-console-access": ["SOC2-CC6.1", "PCI-Req8.4", "CIS-6.3"],
+      "root-account-mfa-enabled": ["CIS-1.5", "SOC2-CC6.1"],
+      "restricted-ssh": ["CIS-5.2", "PCI-Req1.3"],
+      "s3-bucket-public-read-prohibited": ["SOC2-CC6.1", "PCI-Req3.4"],
+      "cloud-trail-enabled": ["CIS-3.1", "SOC2-CC7.2", "PCI-Req10.2"],
+      "ec2-imdsv2-check": ["CIS-4.6", "NIST-PR.PT-3"]
+    }
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "_comment": "Sample CloudTrail event — IAM AttachUserPolicy from suspicious IP. Replace placeholder values. Save as: YYYY-MM-DD_INC-XXXX_cloudtrail-export.json",
+  "Records": [
+    {
+      "eventVersion": "1.08",
+      "userIdentity": {
+        "type": "IAMUser",
+        "principalId": "AIDAEXAMPLEID",
+        "arn": "arn:aws:iam::123456789012:user/jane.smith",
+        "accountId": "123456789012",
+        "accessKeyId": "AKIAIOSFODNN7EXAMPLE",
+        "userName": "jane.smith"
+      },
+      "eventTime": "2025-01-15T09:18:47Z",
+      "eventSource": "iam.amazonaws.com",
+      "eventName": "AttachUserPolicy",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "185.220.101.47",
+      "userAgent": "aws-cli/2.13.0 Python/3.11.6",
+      "requestParameters": {
+        "userName": "jane.smith",
+        "policyArn": "arn:aws:iam::aws:policy/AdministratorAccess"
+      },
+      "responseElements": null,
+      "requestID": "abcd1234-5678-90ef-ghij-klmnopqrstuv",
+      "eventID": "12345678-abcd-1234-efgh-1234567890ab",
+      "readOnly": false,
+      "resources": [
+        {
+          "accountId": "123456789012",
+          "type": "AWS::IAM::User",
+          "ARN": "arn:aws:iam::123456789012:user/jane.smith"
+        },
+        {
+          "accountId": "123456789012",
+          "type": "AWS::IAM::ManagedPolicy",
+          "ARN": "arn:aws:iam::aws:policy/AdministratorAccess"
+        }
+      ],
+      "eventType": "AwsApiCall",
+      "managementEvent": true,
+      "recipientAccountId": "123456789012",
+      "additionalEventData": {
+        "MFAUsed": "No"
+      }
+    },
+    {
+      "_comment": "Second event — CreateLoginProfile (attacker enabling console access for API-only user)",
+      "eventVersion": "1.08",
+      "userIdentity": {
+        "type": "IAMUser",
+        "principalId": "AIDAEXAMPLEID",
+        "arn": "arn:aws:iam::123456789012:user/jane.smith",
+        "accountId": "123456789012",
+        "accessKeyId": "AKIAIOSFODNN7EXAMPLE",
+        "userName": "jane.smith"
+      },
+      "eventTime": "2025-01-15T09:20:15Z",
+      "eventSource": "iam.amazonaws.com",
+      "eventName": "CreateLoginProfile",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "185.220.101.47",
+      "userAgent": "aws-cli/2.13.0 Python/3.11.6",
+      "requestParameters": {
+        "userName": "backdoor-admin",
+        "passwordResetRequired": false
+      },
+      "responseElements": {
+        "loginProfile": {
+          "userName": "backdoor-admin",
+          "createDate": "2025-01-15T09:20:15Z",
+          "passwordResetRequired": false
+        }
+      },
+      "requestID": "efgh5678-1234-abcd-ijkl-mnopqrstuvwx",
+      "eventID": "87654321-dcba-4321-hgfe-ba0987654321",
+      "readOnly": false,
+      "eventType": "AwsApiCall",
+      "managementEvent": true,
+      "recipientAccountId": "123456789012"
+    },
+    {
+      "_comment": "Containment event — Deny-all policy attached by security team",
+      "eventVersion": "1.08",
+      "userIdentity": {
+        "type": "AssumedRole",
+        "principalId": "AROAEXAMPLE:security-incident-responder",
+        "arn": "arn:aws:sts::123456789012:assumed-role/SecurityTeamRole/security-incident-responder",
+        "accountId": "123456789012",
+        "sessionContext": {
+          "sessionIssuer": {
+            "type": "Role",
+            "principalId": "AROAEXAMPLE",
+            "arn": "arn:aws:iam::123456789012:role/SecurityTeamRole",
+            "accountId": "123456789012",
+            "userName": "SecurityTeamRole"
+          }
+        }
+      },
+      "eventTime": "2025-01-15T09:35:00Z",
+      "eventSource": "iam.amazonaws.com",
+      "eventName": "AttachUserPolicy",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.0.1.50",
+      "userAgent": "aws-cli/2.13.0 Python/3.11.6",
+      "requestParameters": {
+        "userName": "jane.smith",
+        "policyArn": "arn:aws:iam::123456789012:policy/EMERGENCY-DenyAll"
+      },
+      "responseElements": null,
+      "requestID": "containment-request-id-example",
+      "eventID": "containment-event-id-example",
+      "readOnly": false,
+      "eventType": "AwsApiCall",
+      "managementEvent": true,
+      "recipientAccountId": "123456789012",
+      "_incident_note": "CONTAINMENT ACTION — performed by security team as part of INC-2025-001 response"
+    }
+  ]
+}
